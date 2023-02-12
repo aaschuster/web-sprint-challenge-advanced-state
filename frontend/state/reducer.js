@@ -15,10 +15,10 @@ const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
   switch (action.type) {
     case MOVE_CLOCKWISE:
-      console.log("move clockwise");
+      if(state===5) return (state=0);
       return (state+1);
     case MOVE_COUNTERCLOCKWISE:
-      console.log("move counterclockwise");
+      if(state===0) return (state=5);
       return (state-1);
     default:
       return state;
