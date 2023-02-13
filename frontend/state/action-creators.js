@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import { 
   MOVE_CLOCKWISE, 
   MOVE_COUNTERCLOCKWISE, 
@@ -17,7 +19,7 @@ export function selectAnswer(answer) {return { type: SET_SELECTED_ANSWER, payloa
 
 export function setMessage(message) {return { type: SET_INFO_MESSAGE, payload: message}}
 
-export function setQuiz(newQuiz) {return { type: SET_QUIZ_INTO_STATE, payload: newQuiz}}
+export function setQuiz(quizState) {return { type: SET_QUIZ_INTO_STATE, payload: quizState}}
 
 export function inputChange(e) {return { type: INPUT_CHANGE, payload: e}}
 
@@ -26,6 +28,9 @@ export function resetForm() {return { type: RESET_FORM }}
 // ❗ Async action creators
 export function fetchQuiz() {
   return function (dispatch) {
+    dispatch(setQuiz("loading"));
+    axios.get("http://localhost:9000/api/quiz/next")
+      .then(res => console.log(res));
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state
