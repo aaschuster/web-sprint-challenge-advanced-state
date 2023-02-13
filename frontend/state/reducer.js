@@ -67,7 +67,23 @@ const initialFormState = {
 }
 
 function form(state = initialFormState, action) {
-  return state
+  switch(action.type) {
+    case INPUT_CHANGE:
+      const target = action.payload.target;
+      switch(target.id) {
+        case("newQuestion") :
+          return {...state, newQuestion: target.value};
+        case("newTrueAnswer"):
+          return {...state, newTrueAnswer: target.value};
+        case("newFalseAnswer"):
+          return {...state, newFalseAnswer: target.value};
+        default: (console.error("Form on which value changed occured doesn't have valid ID."))
+      }
+    case RESET_FORM:
+      return initialFormState;
+    default:
+      return state;
+  }
 }
 
 export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
