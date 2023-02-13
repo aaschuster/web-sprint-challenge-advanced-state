@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import { connect } from "react-redux";
-import { fetchQuiz } from '../state/action-creators'
+import { fetchQuiz, selectAnswer } from '../state/action-creators'
 
 
-function Quiz( { fetchQuiz, quiz} ) {
+function Quiz( { fetchQuiz, selectAnswer, quiz, selectedAnswer} ) {
   useEffect(() => {
     fetchQuiz();
   }, [])
@@ -17,17 +17,17 @@ function Quiz( { fetchQuiz, quiz} ) {
             <h2>{quiz.question}</h2>
 
             <div id="quizAnswers">
-              <div className="answer selected">
-                A function
-                <button>
-                  SELECTED
+              <div className={`answer${selectedAnswer===0 ? " selected" : ""}`}>
+                {quiz.answers[0].text}
+                <button onClick={() => selectAnswer(0)}>
+                  {selectedAnswer===0 ? "SELECTED" : "Select"}
                 </button>
               </div>
 
-              <div className="answer">
-                An elephant
-                <button>
-                  Select
+              <div className={`answer${selectedAnswer===1 ? " selected" : ""}`}>
+                {quiz.answers[1].text}
+                <button onClick={() => selectAnswer(1)}>
+                  {selectedAnswer===1 ? "SELECTED" : "Select"}
                 </button>
               </div>
             </div>
@@ -42,8 +42,9 @@ function Quiz( { fetchQuiz, quiz} ) {
 
 const mapProps = state => {
   return {
-    quiz: state.quiz
+    quiz: state.quiz,
+    selectedAnswer: state.selectedAnswer
   }
 }
 
-export default connect(mapProps, {fetchQuiz})(Quiz);
+export default connect(mapProps, {fetchQuiz, selectAnswer})(Quiz);
