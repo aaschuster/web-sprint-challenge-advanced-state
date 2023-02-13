@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchQuiz } from '../state/action-creators'
 
 
-function Quiz( {fetchQuiz} ) {
+function Quiz( { fetchQuiz, quiz} ) {
   useEffect(() => {
     fetchQuiz();
   }, [])
@@ -12,9 +12,9 @@ function Quiz( {fetchQuiz} ) {
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+        quiz ? (
           <>
-            <h2>What is a closure?</h2>
+            <h2>{quiz.question}</h2>
 
             <div id="quizAnswers">
               <div className="answer selected">
@@ -42,7 +42,7 @@ function Quiz( {fetchQuiz} ) {
 
 const mapProps = state => {
   return {
-
+    quiz: state.quiz
   }
 }
 

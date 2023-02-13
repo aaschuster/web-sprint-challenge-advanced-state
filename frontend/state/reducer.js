@@ -12,13 +12,14 @@ import {
 } from "./action-types"
 
 const initialWheelState = 0
+
 function wheel(state = initialWheelState, action) {
   switch (action.type) {
     case MOVE_CLOCKWISE:
-      if(state===5) return (state=0);
+      if(state===5) return (0);
       return (state+1);
     case MOVE_COUNTERCLOCKWISE:
-      if(state===0) return (state=5);
+      if(state===0) return (5);
       return (state-1);
     default:
       return state;
@@ -26,16 +27,27 @@ function wheel(state = initialWheelState, action) {
 }
 
 const initialQuizState = null
+
 function quiz(state = initialQuizState, action) {
-  return state
+  switch (action.type) {
+    case SET_QUIZ_INTO_STATE:
+      console.log(action.payload);
+      return (action.payload);
+    case SET_SELECTED_ANSWER:
+      return {...state, selectedAnswer: action.payload}
+    default:
+      return state;
+  }
 }
 
 const initialSelectedAnswerState = null
+
 function selectedAnswer(state = initialSelectedAnswerState, action) {
   return state
 }
 
 const initialMessageState = ''
+
 function infoMessage(state = initialMessageState, action) {
   return state
 }
@@ -45,6 +57,7 @@ const initialFormState = {
   newTrueAnswer: '',
   newFalseAnswer: '',
 }
+
 function form(state = initialFormState, action) {
   return state
 }
