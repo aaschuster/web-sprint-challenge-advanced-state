@@ -40,8 +40,15 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
   }
 }
-export function postAnswer() {
+export function postAnswer(quizID, answerID) {
   return function (dispatch) {
+    axios.post("http://localhost:9000/api/quiz/answer", {"quiz_id": quizID, "answer_id": answerID})
+      .then( res => {
+        dispatch(selectAnswer(null));
+        // dispatch(setMessage(res.data.message));
+        dispatch(fetchQuiz());
+      })
+      .catch( err => console.error(err));
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state

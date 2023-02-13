@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import { connect } from "react-redux";
-import { fetchQuiz, selectAnswer } from '../state/action-creators'
+import { fetchQuiz, postAnswer, selectAnswer } from '../state/action-creators'
 
 
-function Quiz( { fetchQuiz, selectAnswer, quiz, selectedAnswer} ) {
+function Quiz( { fetchQuiz, selectAnswer, quiz, selectedAnswer, postAnswer} ) {
   useEffect(() => {
     fetchQuiz();
   }, [])
@@ -32,7 +32,12 @@ function Quiz( { fetchQuiz, selectAnswer, quiz, selectedAnswer} ) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button 
+              id="submitAnswerBtn" 
+              onClick={() => 
+                postAnswer(quiz.quiz_id, quiz.answers[selectedAnswer].answer_id)
+              }
+            >Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
@@ -47,4 +52,4 @@ const mapProps = state => {
   }
 }
 
-export default connect(mapProps, {fetchQuiz, selectAnswer})(Quiz);
+export default connect(mapProps, {fetchQuiz, selectAnswer, postAnswer})(Quiz);
