@@ -1,4 +1,5 @@
 import axios from "axios";
+import { connect } from "react-redux";
 
 import { 
   MOVE_CLOCKWISE, 
@@ -55,11 +56,18 @@ export function postAnswer(quizID, answerID) {
     // - Dispatch the fetching of the next quiz
   }
 }
-export function postQuiz() {
+export function postQuiz( newQuestion, newTrueAnswer, newFalseAnswer ) {
   return function (dispatch) {
-    // On successful POST:
-    // - Dispatch the correct message to the the appropriate state
-    // - Dispatch the resetting of the form
+    axios.post("http://localhost:9000/api/quiz/new", {
+      "question_text": newQuestion, 
+      "true_answer_text": newTrueAnswer, 
+      "false_answer_text": newFalseAnswer
+    })
+      .then(res => {
+        dispatch(setMessage(`Congrats: "${newQuestion} is a great question!`));
+        dispatch(resetForm());
+      })
+      .catch( err => console.error(err));
   }
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
