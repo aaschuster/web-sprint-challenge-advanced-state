@@ -5,7 +5,8 @@ import { fetchQuiz, postAnswer, selectAnswer } from '../state/action-creators'
 
 function Quiz( { fetchQuiz, selectAnswer, quiz, selectedAnswer, postAnswer} ) {
   useEffect(() => {
-    fetchQuiz();
+    console.log("useEffect");
+    if(!quiz) fetchQuiz();
   }, [])
 
   return (
