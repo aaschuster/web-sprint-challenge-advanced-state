@@ -64,21 +64,34 @@ const initialFormState = {
   newQuestion: '',
   newTrueAnswer: '',
   newFalseAnswer: '',
+  disabled: true
 }
 
 function form(state = initialFormState, action) {
   switch(action.type) {
     case INPUT_CHANGE:
       const target = action.payload.target;
+      let newState = {};
       switch(target.id) {
         case("newQuestion") :
-          return {...state, newQuestion: target.value};
+          newState = {...state, newQuestion: target.value};
+          break;
         case("newTrueAnswer"):
-          return {...state, newTrueAnswer: target.value};
+          newState = {...state, newTrueAnswer: target.value};
+          break;
         case("newFalseAnswer"):
-          return {...state, newFalseAnswer: target.value};
+          newState = {...state, newFalseAnswer: target.value};
+          break;
         default: (console.error("Form on which value changed occured doesn't have valid ID."))
       }
+      return {
+        ...newState, 
+        disabled: 
+        (!(
+          newState.newQuestion.trim() && 
+          newState.newTrueAnswer.trim() && 
+          newState.newFalseAnswer.trim()
+        ))};
     case RESET_FORM:
       return initialFormState;
     default:

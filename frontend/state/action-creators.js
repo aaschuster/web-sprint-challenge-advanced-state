@@ -1,5 +1,4 @@
 import axios from "axios";
-import { connect } from "react-redux";
 
 import { 
   MOVE_CLOCKWISE, 
@@ -64,7 +63,7 @@ export function postQuiz( newQuestion, newTrueAnswer, newFalseAnswer ) {
       "false_answer_text": newFalseAnswer
     })
       .then(res => {
-        dispatch(setMessage(`Congrats: "${newQuestion} is a great question!`));
+        dispatch(setMessage(`Congrats: "${newQuestion}" is a great question!`));
         dispatch(resetForm());
       })
       .catch( err => console.error(err));

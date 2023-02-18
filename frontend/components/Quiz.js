@@ -37,6 +37,7 @@ function Quiz( { fetchQuiz, selectAnswer, quiz, selectedAnswer, postAnswer} ) {
               onClick={() => 
                 postAnswer(quiz.quiz_id, quiz.answers[selectedAnswer].answer_id)
               }
+              disabled={selectedAnswer===null}
             >Submit answer</button>
           </>
         ) : 'Loading next quiz...'
